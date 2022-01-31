@@ -1,0 +1,5 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "prettier.bracketSpacing": false,
+    "prettier.htmlWhitespaceSensitivity": "ignore"
+}
