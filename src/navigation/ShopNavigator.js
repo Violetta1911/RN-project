@@ -8,10 +8,12 @@ import {FormScreen} from '../screens/shop/FormScreen';
 import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
 import Colors from '../constants/Colors';
-import { Platform } from 'react-natie ';
-import {MaterialIcons} from 'react-native-vector-icons/MaterialIcons'
+import { Platform } from 'react-native';
+// import {Ionicons} from 'react-native-vector-icons/Ionicons'
+// import { Icon } from 'react-native-elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
+import Ionicons from 'react-native-vector-icons/Ionicons'
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -29,13 +31,13 @@ const Menu = () => <Drawer.Navigator>
     name="Your Orders"
     component={OrdersScreen}
     options={{
-      // drawerIcon: () => (
-      //   <MaterialIcons
-      //     name={Platform.OS ==='android' ? 'create' : 'ios-create'}
-      //     size={23}
-      //     color={Colors.primary}
-      //   />
-      // ),
+      drawerIcon: () => (
+        <Ionicons
+          name='create'
+          size={23}
+          color={Colors.primary}
+        />
+      ),
     }}
   />
   </Drawer.Group>
