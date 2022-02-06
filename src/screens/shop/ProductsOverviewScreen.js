@@ -19,7 +19,7 @@ const ProductsOverviewScreen = props => {
       //   </HeaderButtons>) ,
       headerRight: () => (
       <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-      <Item title='Cart' iconName={Platform.OS === 'android' ? 'shopping-cart': 'ios-cart'} onPress={()=>{
+      <Item title='Cart' iconName='shopping-cart' onPress={()=>{
         props.navigation.navigate('Cart')
       }}/>
       </HeaderButtons>) 

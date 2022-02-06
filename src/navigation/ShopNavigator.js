@@ -20,20 +20,36 @@ const Drawer = createDrawerNavigator();
 
 const Menu = () => <Drawer.Navigator>
    <Drawer.Group
-      screenOptions={{ headerStyle: { backgroundColor: Colors.primary } }}
+      screenOptions={{
+         headerStyle: { backgroundColor: Platform.OS = 'android' ? Colors.primary : '' },
+         headerTitleStyle: { fontWeight: 'bold' },
+         headerTintColor: Platform.OS = 'android' ? 'white' : Colors.primary,
+        }}
      >
 
   <Drawer.Screen
     name="All Products"
     component={ProductsOverviewScreen}
+    options={{
+      drawerActiveTintColor: Colors.primary,
+      drawerLabel: 'All products',
+      drawerIcon: drawerConfig => (
+        <Ionicons
+          name={Platform.OS = 'android' ? 'cart' : 'ios-cart'}
+          size={23}
+          color={Colors.primary}
+        />
+      ),
+    }}
   />
   <Drawer.Screen
     name="Your Orders"
     component={OrdersScreen}
     options={{
-      drawerIcon: () => (
+      drawerLabel: 'Your Orders',
+      drawerIcon: drawerConfig => (
         <Ionicons
-          name='create'
+          name={Platform.OS = 'android' ? 'list' : 'ios-list'}
           size={23}
           color={Colors.primary}
         />
@@ -49,7 +65,12 @@ const ProductNavigator = props => {
     <NavigationContainer>    
       <Stack.Navigator initialRouteName={Menu}>
       <Stack.Group
-      screenOptions={{ headerStyle: { backgroundColor: Colors.primary } }}
+      screenOptions={{
+         headerStyle: { backgroundColor: Colors.primary },
+         presentation:'modal',
+         gestureEnabled: true,
+         gestureDirection: 'horizontal',
+         }}
      >
           <Stack.Screen
             name="ProductsOverviewScreen"

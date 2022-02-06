@@ -14,6 +14,7 @@ const CartScreen = props =>{
 
 
     const cartTotalAmount = useSelector(state=> state.cart.totalAmount);
+    
     const cartItems = useSelector(state=> {
         const transformedCartItems = [];
         for (const key in state.cart.items){
@@ -24,10 +25,13 @@ const CartScreen = props =>{
                 quantity: state.cart.items[key].quantity,
                 sum: state.cart.items[key].sum
 
-            })
+            });
            
-        };
-        return transformedCartItems 
+        }
+        
+        return transformedCartItems.sort((a,b)=>
+        a.productId > b.productId ? 1 : -1
+        ); 
     });
 
     return <View style={styles.screen}>
@@ -41,7 +45,7 @@ const CartScreen = props =>{
             title="Order Now" 
             color={Colors.accent}
             disabled={cartItems.length === 0}
-            onPress={()=> dispatch(orderActions.addOrder(cartItems,cartTotalAmount))}/>
+            onPress={()=> dispatch(orderActions.addOrder(cartItems, cartTotalAmount))}/>
         </View>
         <FlatList
          data={cartItems} 
@@ -52,6 +56,7 @@ const CartScreen = props =>{
              title={itemData.item.productTitle} 
              amount={itemData.item.sum} 
              onRemove={() => dispatch(cartActions.removeFromCart(itemData.item.productId))}
+             deletable 
         
             />
         )}
