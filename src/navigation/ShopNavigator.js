@@ -2,18 +2,22 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
+import { Platform } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'
+
+// import screens
 import ProductsOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import {FormScreen} from '../screens/shop/FormScreen';
 import CartScreen from '../screens/shop/CartScreen';
 import OrdersScreen from '../screens/shop/OrdersScreen';
-import Colors from '../constants/Colors';
-import { Platform } from 'react-native';
-// import {Ionicons} from 'react-native-vector-icons/Ionicons'
-// import { Icon } from 'react-native-elements';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import UserProductScreen from '../screens/user/UserProductsScreen';
+import EditProductScreen from '../screens/user/EditProductScreen';
 
-import Ionicons from 'react-native-vector-icons/Ionicons'
+// import constatnts
+import Colors from '../constants/Colors';
+
+
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -56,6 +60,21 @@ const Menu = () => <Drawer.Navigator>
       ),
     }}
   />
+   <Drawer.Screen
+    name="UserProducts"
+    component={UserProductScreen}
+    options={{
+      drawerLabel: 'User Products',
+      drawerIcon: () => (
+        <Ionicons
+          name={Platform.OS = 'android' ? 'create' : 'ios-create'}
+          size={23}
+          color={Colors.primary}
+        />
+      ),
+    }}
+  />
+
   </Drawer.Group>
 
 </Drawer.Navigator>
@@ -84,7 +103,12 @@ const ProductNavigator = props => {
            <Stack.Screen
             name="Cart"
             component={CartScreen}
-          />          
+          />   
+           <Stack.Screen
+            name="EditProduct"
+            component={EditProductScreen}
+          />       
+          
            
         </Stack.Group>
       </Stack.Navigator>

@@ -5,19 +5,33 @@ import CartItem from "../../components/shop/CartItem";
 import Colors from "../../constants/Colors";
 
 const OrderItem = props => {
-    const {showDetails, setShowDetails} = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
+
 
     return <View style={styles.orderItem}>
         <View style={styles.summary}>
             <Text style={styles.totalAmount}>${props.totalAmount.toFixed(2)}</Text>
             <Text style={styles.date}>{props.date}</Text>
         </View>
-        
-        <Button title="Show Details" color={Colors.primary} onPress={()=> setShowDetails(prevState => !prevState)}/>
-        {showDetails&& <View>
-            {props.items.map(cartItem => <CartItem quantity = {cartItem.quantity} amount = {cartItem.sum} title={cartItem.productTitle}/>)}
+
+        {showDetails && <View style = {styles.detailItems}>
+            {props.items.map(cartItem =>(
+                <CartItem 
+                quantity = {cartItem.quantity} 
+                amount = {cartItem.sum} 
+                title={cartItem.productTitle}
+                />
+            ))}
         </View> }
 
+        
+        <Button 
+        title= {showDetails ?  'Hide details' : "Show Details" }
+        color={Colors.primary} 
+        onPress={()=> {
+       setShowDetails(prevState => !prevState)
+            }}/>
+       
     </View>
 }
 
@@ -50,7 +64,9 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#888',
     },
-
+    detailItems: {
+        width: '100%'
+    }
 
 })
 
