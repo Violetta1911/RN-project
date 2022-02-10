@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {View, Text, ScrollView, TextInput, StyleSheet} from 'react-native';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { useRoute } from "@react-navigation/native";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import * as productsActions from '../../store/actions/products'
 import CustomHeaderButton from '../../components/UI/HeaderButton';
-import { useSelector } from "react-redux";
 
 
 const EditProductScreen = props => {
@@ -16,26 +19,38 @@ const EditProductScreen = props => {
         headerTitle: productId === null ? 'Add product'  : 'Edit product',
         headerRight: () => (
         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-        <Item title='Save' iconName='check' onPress={()=>{
-        }}/>
+        <Item title='Save' iconName='check' onPress={submitHandler}/>
         </HeaderButtons>) 
       })
-
-     console.log('edited', editedProduct) 
 
      const [title, setTitle] = useState(editedProduct ? editedProduct.title : ''); 
      const [imageUrl, setImageUrl] = useState(editedProduct ? editedProduct.imageUrl : '');
      const [price, setPrice] = useState('');
      const [description, setDescription] = useState(editedProduct ? editedProduct.description : '');
 
-     console.log('title', title)
+     console.log('title:', title)
+
+     const dispatch = useDispatch();
+
+    const submitHandler = useCallback(() => {
+       if (editedProduct) {
+           dispatch(productsActions.updateProduct(productId, title, description, imageUrl))
+       } else {
+        dispatch(productsActions.createProduct(title, description, imageUrl, +price))
+       }
+       props.navigation.goBack();
+    },[])
+
+    useEffect(()=>{
+        props.navigation.setParams({submit: submitHandler});
+    },[submitHandler])
 
 
     return <ScrollView>
         <View style = {styles.form}>
          <View style= {styles.formControl}>
            <Text style= {styles.lable}>Title</Text>
-           <TextInput style= {styles.input} defaultValue={title} onChangeText={text => setTitle(text)}/>
+           <TextInput style= {styles.input} value={title} onChangeText={text => setTitle(text)}/>
         </View>
         <View style= {styles.formControl}>
            <Text style= {styles.lable}>Image</Text>
@@ -71,7 +86,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: 18,
     },
-    input:{
+    input:{    
         paddingHorizontal: 2,
         paddingVertical: 5,
     },
